@@ -1,12 +1,17 @@
+import os
 import discord
+from dotenv import load_dotenv
 from dbConnector import DbConnector
 from eth import ETHBlockchain
 from commands import commands_length
 from currencies import currency
 
+# Load token from .env file
+load_dotenv()
+
 LOG = "NONE" # NONE / DEBUG
-ETH_TOKEN = "test"
-DISCORD_TOKEN = "test"
+ETH_TOKEN = os.getenv("ETH_TOKEN")
+DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
 
 DEFAULT_CURRENCY = currency.USD
 ETH_ADDRESS_LENGTH = 42
