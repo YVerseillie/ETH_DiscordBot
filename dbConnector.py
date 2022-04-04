@@ -78,9 +78,12 @@ class DbConnector(metaclass=MetaSingleton):
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM ETHAddress WHERE id = %s", (id,))
         addresses = cursor.fetchall()
+        print(addresses)
+        print ("address to delete : " + address)
 
         #Check if address already exists
         for addressDB in addresses:
+            print(addressDB)
             if (addressDB[1] == address):
                 cursor.execute("DELETE FROM ETHAddress WHERE id = %s AND ethAddress = %s", (id, address))
                 conn.commit()

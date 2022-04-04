@@ -77,7 +77,9 @@ async def list(message):
 
 # Remove ETH address from database with !eth remove <ETH address>
 async def remove(message):
-    if (dbConnector.removeAddress(message.author.id, message.content[len(suffix) + commands_length.remove:]) == 0):
+    # Split message
+    splitMessage = message.content.split(" ")
+    if (dbConnector.removeAddress(message.author.id, splitMessage[2]) == 0):
         await message.channel.send("Address removed from database !")
     else:
         await message.channel.send("You don't have this address linked to your account !")
@@ -140,6 +142,9 @@ async def on_message(message):
         elif message.content.startswith(suffix + " balance"):
             if (len(message.content) == len(suffix) + commands_length.balance.value):
                 await balance(message)
+        elif message.content.startswith(suffix + " reload"):
+            ethPrice = await ethBlockchain.getETHPrice()
+            await client.change_presence(activity=discord.Game(name="ETH: " + str(ethPrice) + " USD"))
         else:
             await message.channel.send("Unknown command !")
 
